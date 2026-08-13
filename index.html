@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skyline Logistix — Pan-India Road Freight & Transport</title>
+<meta name="description" content="Skyline Logistix runs FTL, LTL and express road freight across India — with verified drivers, insured consignments, and full visibility from pickup to delivery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#1B1D21;
+    --asphalt-2:#25282e;
+    --concrete:#F3F1EA;
+    --amber:#F5A623;
+    --amber-dim:#c9860f;
+    --steel:#35505E;
+    --green:#3F8F5F;
+    --ink:#22262B;
+    --ink-soft:#5b6169;
+    --white:#FFFFFF;
+    --line:#dedad0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'IBM Plex Sans',sans-serif;
+    color:var(--ink);
+    background:var(--concrete);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:600;
+    line-height:1.05;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--amber-dim);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:14px;
+    font-weight:600;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:2px;background:var(--amber-dim);
+    display:inline-block;
+  }
+  section.dark .eyebrow{color:var(--amber);}
+  section.dark .eyebrow::before{background:var(--amber);}
+
+  .lane-divider{
+    height:6px;
+    background-repeat:repeat-x;
+    background-image:linear-gradient(90deg, var(--amber) 0 26px, transparent 26px 46px);
+    background-size:46px 6px;
+    opacity:0.55;
+  }
+
+  .topbar{
+    background:var(--asphalt);
+    color:#bfc3c8;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+  }
+  .topbar .wrap{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 28px;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .topbar span{white-space:nowrap;}
+  .topbar .tag{
+    color:var(--amber);
+    font-weight:600;
+    letter-spacing:0.08em;
+  }
+  .topbar .right{display:flex;gap:20px;flex-wrap:wrap;}
+  .topbar a{transition:color .2s;}
+  .topbar a:hover{color:var(--amber);}
+
+  header{
+    background:var(--asphalt);
+    position:sticky;top:0;z-index:50;
+    border-bottom:1px solid #2c2f35;
+  }
+  header .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    color:var(--white);
+  }
+  .logo .mark{
+    width:34px;height:34px;
+    position:relative;
+    flex:none;
+  }
+  .logo .mark svg{width:100%;height:100%;}
+  .logo .text{
+    font-family:'Oswald',sans-serif;
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:0.03em;
+    line-height:1;
+  }
+  .logo .text span{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9px;
+    letter-spacing:0.22em;
+    color:var(--amber);
+    font-weight:500;
+    margin-top:3px;
+  }
+  nav.mainnav{display:flex;align-items:center;gap:34px;}
+  nav.mainnav .links{display:flex;gap:28px;}
+  nav.mainnav a.navlink{
+    color:#c9cdd3;
+    font-size:14px;
+    font-weight:500;
+    transition:color .2s;
+  }
+  nav.mainnav a.navlink:hover{color:var(--white);}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:12px 22px;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    border-radius:2px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:all .2s;
+    white-space:nowrap;
+  }
+  .btn-amber{background:var(--amber);color:var(--asphalt);}
+  .btn-amber:hover{background:#ffb948;}
+  .btn-outline-dark{border-color:#484c53;color:var(--white);}
+  .btn-outline-dark:hover{border-color:var(--amber);color:var(--amber);}
+  .btn-outline-light{border-color:#c7c2b5;color:var(--ink);}
+  .btn-outline-light:hover{border-color:var(--steel);background:#eae6da;}
+  .menu-toggle{display:none;background:none;border:none;color:var(--white);font-size:24px;cursor:pointer;}
+
+  .hero{
+    background:radial-gradient(ellipse at 75% 20%, #263039 0%, var(--asphalt) 55%);
+    color:var(--white);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    align-items:center;
+    gap:40px;
+    padding-top:76px;
+    padding-bottom:64px;
+    min-height:560px;
+  }
+  .hero h1{
+    font-size:clamp(34px,4.6vw,58px);
+    color:var(--white);
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--amber);
+  }
+  .hero p.lead{
+    font-size:17px;
+    line-height:1.6;
+    color:#c9cdd3;
+    max-width:480px;
+    margin-bottom:32px;
+  }
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:38px;}
+  .badge-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .badge{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.03em;
+    color:#dfe2e6;
+    border:1px solid #3a3e45;
+    padding:7px 12px;
+    border-radius:2px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .badge::before{content:"";width:6px;height:6px;background:var(--green);border-radius:50%;flex:none;}
+
+  .network-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    max-width:520px;
+    justify-self:center;
+  }
+  .network-wrap svg{width:100%;height:100%;overflow:visible;}
+  .node-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    fill:#c9cdd3;
+    letter-spacing:0.03em;
+  }
+  .node-dot{fill:var(--amber);}
+  .node-ring{
+    fill:none;stroke:var(--amber);stroke-width:1.4;opacity:0.35;
+  }
+  .link-line{
+    fill:none;stroke:#4a4f57;stroke-width:1.2;
+  }
+  .link-line.active{
+    stroke:var(--amber);stroke-opacity:0.55;
+    stroke-dasharray:4 5;
+    animation:dash 3.2s linear infinite;
+  }
+  @keyframes dash{to{stroke-dashoffset:-90;}}
+  .hub-core{fill:var(--asphalt-2);stroke:var(--amber);stroke-width:2;}
+  .hub-text{
+    font-family:'Oswald',sans-serif;
+    font-size:13px;fill:var(--white);
+    text-transform:uppercase;letter-spacing:0.06em;font-weight:600;
+  }
+  .pulse{
+    fill:var(--amber);
+    animation:pulse 2.6s ease-out infinite;
+    transform-origin:center;
+  }
+  @keyframes pulse{
+    0%{opacity:0.6;r:3;}
+    70%{opacity:0;r:16;}
+    100%{opacity:0;r:16;}
+  }
+
+  section{padding:88px 0;}
+  section.dark{background:var(--asphalt);color:var(--white);}
+  section.dark h2{color:var(--white);}
+  section.dark p{color:#c9cdd3;}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:30px;flex-wrap:wrap;
+    margin-bottom:46px;
+  }
+  .section-head h2{font-size:clamp(26px,3vw,38px);max-width:640px;}
+  .section-head p{color:var(--ink-soft);max-width:420px;font-size:15px;line-height:1.6;}
+
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .service-card{
+    background:var(--concrete);
+    padding:32px 28px;
+    display:flex;flex-direction:column;gap:14px;
+    transition:background .2s;
+  }
+  .service-card:hover{background:#eae6da;}
+  .service-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;font-weight:600;
+    color:var(--white);
+    background:var(--steel);
+    padding:4px 9px;
+    border-radius:2px;
+    width:fit-content;
+    letter-spacing:0.05em;
+  }
+  .service-card h3{font-size:19px;color:var(--ink);}
+  .service-card p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+
+  .coverage-layout{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:60px;
+    align-items:center;
+  }
+  .zone-list{display:flex;flex-direction:column;}
+  .zone{
+    padding:20px 0;
+    border-top:1px solid #3a3e45;
+    display:grid;
+    grid-template-columns:110px 1fr;
+    gap:18px;
+    align-items:baseline;
+  }
+  .zone:last-child{border-bottom:1px solid #3a3e45;}
+  .zone-name{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--amber);letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .zone-cities{font-size:14.5px;color:#dfe2e6;line-height:1.6;}
+
+  .process-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    position:relative;
+  }
+  .process-step{
+    padding:0 24px 0 0;
+    position:relative;
+  }
+  .process-step .num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;color:var(--amber-dim);font-weight:600;
+    margin-bottom:14px;
+    display:block;
+  }
+  .process-step h3{font-size:18px;margin-bottom:10px;}
+  .process-step p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+  .process-step::after{
+    content:"";
+    position:absolute;top:8px;right:0;
+    width:1px;height:calc(100% - 20px);
+    background:var(--line);
+  }
+  .process-step:last-child::after{display:none;}
+
+  .why-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:36px 40px;
+  }
+  .why-item{display:flex;gap:16px;align-items:flex-start;}
+  .why-item .ico{
+    flex:none;width:38px;height:38px;
+    border:1.4px solid var(--amber);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--amber);
+  }
+  .why-item h4{font-size:15.5px;text-transform:none;font-family:'IBM Plex Sans';font-weight:700;margin-bottom:6px;color:var(--ink);}
+  .why-item p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;}
+
+  .industries-strip{
+    display:flex;flex-wrap:wrap;gap:14px;
+  }
+  .industry-chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;letter-spacing:0.04em;
+    border:1px solid var(--line);
+    padding:10px 18px;
+    border-radius:20px;
+    color:var(--ink-soft);
+  }
+
+  .contact-layout{
+    display:grid;grid-template-columns:1fr 1fr;gap:60px;
+  }
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;font-size:12px;font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.05em;color:var(--ink-soft);margin-bottom:6px;
+  }
+  .field input,.field select,.field textarea{
+    width:100%;padding:12px 13px;
+    border:1px solid #cfc9ba;background:var(--white);
+    font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:var(--ink);
+    border-radius:2px;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:2px solid var(--amber-dim);outline-offset:1px;border-color:var(--amber-dim);
+  }
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .form-note{font-size:12px;color:var(--ink-soft);margin-top:10px;}
+  .contact-info-card{
+    background:var(--asphalt);color:var(--white);
+    padding:38px 34px;border-radius:2px;
+    display:flex;flex-direction:column;gap:22px;
+  }
+  .contact-info-card h3{font-size:20px;margin-bottom:4px;}
+  .cinfo-row{display:flex;gap:14px;align-items:flex-start;}
+  .cinfo-row .lbl{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber);
+    letter-spacing:0.08em;text-transform:uppercase;width:90px;flex:none;margin-top:2px;
+  }
+  .cinfo-row .val{font-size:14.5px;color:#dfe2e6;line-height:1.6;}
+  .cinfo-row .val a{border-bottom:1px solid rgba(245,166,35,0.4);}
+  .cinfo-row .val a:hover{color:var(--amber);}
+  #formMsg{
+    margin-top:14px;padding:12px 14px;border-radius:2px;
+    background:#e5f2ea;color:#1f5c39;font-size:13.5px;display:none;
+  }
+
+  footer{background:#15171a;color:#9aa0a8;padding:56px 0 26px;}
+  .footer-grid{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;
+    padding-bottom:40px;border-bottom:1px solid #26292e;margin-bottom:26px;
+  }
+  .footer-grid h5{
+    font-family:'IBM Plex Mono',monospace;color:#c9cdd3;font-size:12px;
+    letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;font-weight:600;
+  }
+  .footer-grid ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .footer-grid ul a{font-size:13.5px;color:#9aa0a8;transition:color .2s;}
+  .footer-grid ul a:hover{color:var(--amber);}
+  .footer-brand p{font-size:13.5px;line-height:1.6;color:#9aa0a8;max-width:280px;margin-top:14px;}
+  .foot-bottom{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:12px;font-family:'IBM Plex Mono',monospace;color:#6b6f75;
+  }
+
+  .fab-col{
+    position:fixed;right:22px;bottom:22px;z-index:60;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .fab{
+    width:52px;height:52px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    color:var(--white);cursor:pointer;
+    transition:transform .2s;
+  }
+  .fab:hover{transform:scale(1.07);}
+  .fab.mail{background:var(--amber);color:var(--asphalt);}
+
+  @media (max-width:980px){
+    .hero .wrap{grid-template-columns:1fr;padding-top:48px;}
+    .network-wrap{max-width:380px;order:-1;margin:0 auto 20px;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .coverage-layout{grid-template-columns:1fr;}
+    .process-grid{grid-template-columns:repeat(2,1fr);gap:30px 0;}
+    .process-step::after{display:none;}
+    .why-grid{grid-template-columns:repeat(2,1fr);}
+    .contact-layout{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    nav.mainnav .links{display:none;}
+  }
+  @media (max-width:640px){
+    .services-grid{grid-template-columns:1fr;}
+    .process-grid{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr;}
+    .field-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .topbar .wrap{justify-content:center;text-align:center;}
+    .menu-toggle{display:block;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .link-line.active{animation:none;}
+    .pulse{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="tag">● PAN-INDIA ROAD FREIGHT</span>
+    <div class="right">
+      <span>Mon–Sat · 9:00–20:00 IST</span>
+      <span><a href="mailto:info@skylinelogistix.in">info@skylinelogistix.in</a></span>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <a href="#top" class="logo">
+      <span class="mark">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M4 28 L18 8 L22 8 L36 28" stroke="#F5A623" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M11 28 L20 15 L29 28" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="text">SKYLINE LOGISTIX<span>ROAD FREIGHT · ALL INDIA</span></span>
+    </a>
+    <nav class="mainnav">
+      <div class="links">
+        <a class="navlink" href="#services">Services</a>
+        <a class="navlink" href="#coverage">Coverage</a>
+        <a class="navlink" href="#process">How It Works</a>
+        <a class="navlink" href="#why">Why Us</a>
+        <a class="navlink" href="#contact">Contact</a>
+      </div>
+      <a href="#contact" class="btn btn-amber">Get a Quote</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Road Freight · All India</div>
+      <h1>Your cargo, moving <em>on schedule</em> — every state, every time.</h1>
+      <p class="lead">Skyline Logistix runs FTL, LTL and express road freight across India — with verified drivers, insured consignments, and visibility from pickup to delivery.</p>
+      <div class="cta-row">
+        <a href="#contact" class="btn btn-amber">Get a Freight Quote</a>
+        <a href="#services" class="btn btn-outline-dark">Explore Services</a>
+      </div>
+      <div class="badge-row">
+        <span class="badge">Pan-India Network</span>
+        <span class="badge">Real-Time Tracking</span>
+        <span class="badge">Insured Consignments</span>
+        <span class="badge">Dedicated Fleet Options</span>
+      </div>
+    </div>
+
+    <div class="network-wrap">
+      <svg viewBox="0 0 520 520">
+        <circle class="node-ring" cx="260" cy="260" r="150"/>
+        <circle class="node-ring" cx="260" cy="260" r="205" opacity="0.18"/>
+        <g id="links"></g>
+        <circle class="hub-core" cx="260" cy="260" r="34"/>
+        <text class="hub-text" x="260" y="256" text-anchor="middle">HUB</text>
+        <text class="hub-text" x="260" y="270" text-anchor="middle" style="font-size:8px;letter-spacing:0.08em;fill:#c9cdd3;">DISPATCH</text>
+        <g id="nodes"></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="lane-divider"></div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">What We Move</div>
+        <h2>Freight solutions for every kind of load</h2>
+      </div>
+      <p>From single pallets to full truckloads and oversized industrial equipment — one network handles it all.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-tag">FTL</span>
+        <h3>Full Truckload</h3>
+        <p>Dedicated vehicles for bulk consignments, moving direct from origin to destination without transshipment.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-tag">LTL</span>
+        <h3>Part Load</h3>
+        <p>Cost-efficient shared-load freight for smaller consignments on regular trunk routes across India.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-tag">XPS</span>
+        <h3>Express Delivery</h3>
+        <p>Time-committed dispatches for urgent, high-priority shipments that can't wait for a regular schedule.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-tag">ODC</span>
+        <h3>Over-Dimensional Cargo</h3>
+        <p>Specialized vehicles, route surveys and permits for heavy, oversized or industrial equipment.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-tag">WHS</span>
+        <h3>Warehousing & Fulfillment</h3>
+        <p>Short and long-term storage with inventory handling and dispatch support at strategic hubs.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-tag">RVL</span>
+        <h3>Reverse Logistics</h3>
+        <p>Return, replacement and pick-up management built for e-commerce and retail operations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="coverage">
+  <div class="wrap">
+    <div class="coverage-layout">
+      <div>
+        <div class="eyebrow">Network</div>
+        <h2 style="font-size:clamp(26px,3vw,36px);margin-bottom:20px;">Built for the whole country</h2>
+        <p style="max-width:420px;font-size:15px;line-height:1.65;margin-bottom:0;">Six regional zones, connected through central dispatch — so a booking from any city routes onto the fastest available lane.</p>
+      </div>
+      <div class="zone-list">
+        <div class="zone">
+          <span class="zone-name">North</span>
+          <span class="zone-cities">Delhi NCR, Punjab, Haryana, Uttar Pradesh, Rajasthan</span>
+        </div>
+        <div class="zone">
+          <span class="zone-name">West</span>
+          <span class="zone-cities">Mumbai, Pune, Ahmedabad, Surat, Gujarat, Goa</span>
+        </div>
+        <div class="zone">
+          <span class="zone-name">South</span>
+          <span class="zone-cities">Bengaluru, Chennai, Hyderabad, Kochi, Coimbatore</span>
+        </div>
+        <div class="zone">
+          <span class="zone-name">East</span>
+          <span class="zone-cities">Kolkata, Bhubaneswar, Patna, Ranchi</span>
+        </div>
+        <div class="zone">
+          <span class="zone-name">Central</span>
+          <span class="zone-cities">Bhopal, Indore, Nagpur, Raipur</span>
+        </div>
+        <div class="zone">
+          <span class="zone-name">Northeast</span>
+          <span class="zone-cities">Guwahati, Agartala, Imphal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">How It Works</div>
+        <h2>Booking to delivery, in four steps</h2>
+      </div>
+      <p>A simple, transparent process — from the moment you request a quote to proof of delivery.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <span class="num">01</span>
+        <h3>Request a Quote</h3>
+        <p>Share pickup, drop and load details by email — get a rate and transit estimate back quickly.</p>
+      </div>
+      <div class="process-step">
+        <span class="num">02</span>
+        <h3>Confirm & Schedule</h3>
+        <p>We confirm vehicle type, route and pickup slot, and assign a verified driver to your consignment.</p>
+      </div>
+      <div class="process-step">
+        <span class="num">03</span>
+        <h3>Move & Track</h3>
+        <p>Your shipment moves on the assigned lane with status updates through to arrival at destination.</p>
+      </div>
+      <div class="process-step">
+        <span class="num">04</span>
+        <h3>Deliver & Confirm</h3>
+        <p>Proof of delivery is shared once the consignment is handed over and signed off at destination.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Why Skyline</div>
+        <h2>Reliability, built into the network</h2>
+      </div>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="ico">✓</span>
+        <div>
+          <h4>Verified Drivers</h4>
+          <p>Every driver on the network is background-checked and route-briefed before dispatch.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="ico">◎</span>
+        <div>
+          <h4>Insured Consignments</h4>
+          <p>Cargo insurance available on every booking, so your shipment is covered end to end.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="ico">⏱</span>
+        <div>
+          <h4>Committed Transit Times</h4>
+          <p>Realistic ETAs set at booking, with status updates as your shipment moves.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="ico">⬢</span>
+        <div>
+          <h4>Flexible Load Types</h4>
+          <p>FTL, LTL, express and ODC — one partner for every kind of shipment you run.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="ico">₹</span>
+        <div>
+          <h4>Transparent Pricing</h4>
+          <p>Upfront rates with no hidden charges, quoted clearly before you confirm a booking.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="ico">✉</span>
+        <div>
+          <h4>Direct Support</h4>
+          <p>One dedicated email line for quotes, tracking queries and support — no call centres.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <div class="eyebrow">Industries We Serve</div>
+    <h2 style="font-size:clamp(24px,3vw,32px);margin-bottom:28px;">Trusted across sectors</h2>
+    <div class="industries-strip">
+      <span class="industry-chip">E-commerce</span>
+      <span class="industry-chip">Manufacturing</span>
+      <span class="industry-chip">FMCG & Retail</span>
+      <span class="industry-chip">Pharmaceuticals</span>
+      <span class="industry-chip">Automotive</span>
+      <span class="industry-chip">Textiles</span>
+      <span class="industry-chip">Industrial Equipment</span>
+      <span class="industry-chip">Agriculture</span>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Get In Touch</div>
+        <h2>Request a freight quote</h2>
+      </div>
+      <p>Send your shipment details and we'll get back to you with a quote and transit estimate.</p>
+    </div>
+    <div class="contact-layout">
+      <form id="quoteForm">
+        <div class="field-row">
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" required>
+          </div>
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="from">Pickup City</label>
+            <input type="text" id="from" required>
+          </div>
+          <div class="field">
+            <label for="to">Destination City</label>
+            <input type="text" id="to" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="loadtype">Load Type</label>
+          <select id="loadtype">
+            <option>Full Truckload (FTL)</option>
+            <option>Part Load (LTL)</option>
+            <option>Express Delivery</option>
+            <option>Over-Dimensional Cargo</option>
+            <option>Warehousing</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Shipment Details</label>
+          <textarea id="message" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-amber" style="width:100%;">Send Quote Request</button>
+        <p class="form-note">This form opens your email client, addressed to our team — no data is stored on this site.</p>
+        <div id="formMsg"></div>
+      </form>
+
+      <div class="contact-info-card">
+        <div>
+          <h3>Contact Skyline Logistix</h3>
+          <p style="font-size:13.5px;color:#9aa0a8;">All bookings, quotes and support are handled by email.</p>
+        </div>
+        <div class="cinfo-row">
+          <span class="lbl">Email</span>
+          <span class="val"><a href="mailto:info@skylinelogistix.in">info@skylinelogistix.in</a></span>
+        </div>
+        <div class="cinfo-row">
+          <span class="lbl">Hours</span>
+          <span class="val">Monday – Saturday, 9:00 AM – 8:00 PM IST</span>
+        </div>
+        <div class="cinfo-row">
+          <span class="lbl">Response</span>
+          <span class="val">Quotes are typically answered within one business day.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="text mono" style="color:#c9cdd3;font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;">SKYLINE LOGISTIX</span>
+        <p>Pan-India road freight — FTL, LTL, express and specialized cargo, run through a six-zone dispatch network.</p>
+      </div>
+      <div>
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Full Truckload</a></li>
+          <li><a href="#services">Part Load</a></li>
+          <li><a href="#services">Express Delivery</a></li>
+          <li><a href="#services">Warehousing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#coverage">Network</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#why">Why Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:info@skylinelogistix.in">info@skylinelogistix.in</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Skyline Logistix. All rights reserved.</span>
+      <span>Pan-India Road Freight Network</span>
+    </div>
+  </div>
+</footer>
+
+<div class="fab-col">
+  <a href="mailto:info@skylinelogistix.in" class="fab mail" aria-label="Email us" title="Email us">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16v16H4z" stroke="none"/>
+      <path d="M22 6l-10 7L2 6"/>
+      <rect x="2" y="4" width="20" height="16" rx="2"/>
+    </svg>
+  </a>
+</div>
+
+<script>
+  // Build the network graphic
+  const cities = ["DELHI","MUMBAI","BENGALURU","KOLKATA","CHENNAI","AHMEDABAD","HYDERABAD","PUNE"];
+  const cx = 260, cy = 260, r = 175;
+  const nodesG = document.getElementById('nodes');
+  const linksG = document.getElementById('links');
+  cities.forEach((city, i) => {
+    const angle = (i / cities.length) * Math.PI * 2 - Math.PI / 2;
+    const x = cx + r * Math.cos(angle);
+    const y = cy + r * Math.sin(angle);
+
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    line.setAttribute("d", `M ${cx} ${cy} L ${x} ${y}`);
+    line.setAttribute("class", i % 2 === 0 ? "link-line active" : "link-line");
+    linksG.appendChild(line);
+
+    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    dot.setAttribute("cx", x);
+    dot.setAttribute("cy", y);
+    dot.setAttribute("r", 4);
+    dot.setAttribute("class", "node-dot");
+    nodesG.appendChild(dot);
+
+    if (i % 2 === 0) {
+      const pulse = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      pulse.setAttribute("cx", x);
+      pulse.setAttribute("cy", y);
+      pulse.setAttribute("r", 3);
+      pulse.setAttribute("class", "pulse");
+      pulse.style.animationDelay = (i * 0.4) + "s";
+      nodesG.appendChild(pulse);
+    }
+
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    const lx = cx + (r + 22) * Math.cos(angle);
+    const ly = cy + (r + 22) * Math.sin(angle);
+    label.setAttribute("x", lx);
+    label.setAttribute("y", ly);
+    label.setAttribute("text-anchor", "middle");
+    label.setAttribute("class", "node-label");
+    label.textContent = city;
+    nodesG.appendChild(label);
+  });
+
+  // Quote form -> opens mail client with prefilled details
+  const form = document.getElementById('quoteForm');
+  const formMsg = document.getElementById('formMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const from = document.getElementById('from').value;
+    const to = document.getElementById('to').value;
+    const loadtype = document.getElementById('loadtype').value;
+    const message = document.getElementById('message').value;
+
+    const subject = encodeURIComponent(`Freight Quote Request: ${from} to ${to}`);
+    const body = encodeURIComponent(
+`Name: ${name}
+Email: ${email}
+Pickup City: ${from}
+Destination City: ${to}
+Load Type: ${loadtype}
+
+Shipment Details:
+${message}`
+    );
+    window.location.href = `mailto:info@skylinelogistix.in?subject=${subject}&body=${body}`;
+
+    formMsg.style.display = 'block';
+    formMsg.textContent = "Opening your email app to send this request…";
+  });
+</script>
+
+</body>
+</html>
